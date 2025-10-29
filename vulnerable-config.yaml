@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  # Hard-coded credentials
+  database_password: "admin123"
+  api_key: "sk_live_abc123xyz789"
+  secret_token: "ghp_abc123xyz789"
+  aws_access_key: "AKIAIOSFODNN7EXAMPLE"
+  aws_secret_key: "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+  
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: app-secrets
+# Vulnerable: base64 encoded credentials (not encryption)
+data:
+  password: YWRtaW4xMjM=  # admin123
+  api_token: c2tfbGl2ZV9hYmMxMjN4eXo3ODk=  # sk_live_abc123xyz789
+  
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: vulnerable-pod
+spec:
+  containers:
+  - name: app
+    image: myapp:latest
+    env:
+    # Vulnerable: Hardcoded secrets in environment
+    - name: DATABASE_PASSWORD
+      value: "admin123"
+    - name: API_KEY
+      value: "sk_live_abc123xyz789"
+    # Vulnerable: Running as root
+    securityContext:
+      runAsUser: 0
+      privileged: true
+    # Vulnerable: hostPath mount
+    volumeMounts:
+    - name: host-root
+      mountPath: /host
+  volumes:
+  - name: host-root
+    hostPath:
+      path: /
