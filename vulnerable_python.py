@@ -3,7 +3,7 @@ import pickle
 import subprocess
 import hashlib
 
-# SQL Injection vulnerability
+ 
 def search_user(username):
     import sqlite3
     conn = sqlite3.connect('users.db')
@@ -13,12 +13,12 @@ def search_user(username):
     cursor.execute(query)
     return cursor.fetchall()
 
-# Hard-coded credentials
+ 
 API_KEY = "sk_live_abc123xyz789"
 PASSWORD = "admin123"
 SECRET_TOKEN = "ghp_abc123xyz789"
 
-# Command injection
+ 
 def run_command(user_input):
     # Vulnerable: Shell=True with user input
     os.system(f"ls -la {user_input}")
