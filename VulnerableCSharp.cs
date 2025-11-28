@@ -14,7 +14,7 @@ namespace VulnerableApp
         private const string API_KEY = "sk_live_abc123xyz789";
         private const string CONNECTION_STRING = "Server=myServer;Database=myDB;User Id=sa;Password=admin123;";
 
-        // SQL Injection
+        
         public void GetUser(string username)
         {
             using (SqlConnection conn = new SqlConnection(CONNECTION_STRING))
@@ -27,7 +27,7 @@ namespace VulnerableApp
             }
         }
 
-        // Command injection
+      
         public void ExecuteCommand(string userInput)
         {
             // Vulnerable: ProcessStartInfo with user input
