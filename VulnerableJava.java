@@ -2,7 +2,7 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class VulnerableJava {
-    // SQL Injection vulnerability
+ 
     public void searchUser(String username) {
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/db", "user", "pass");
@@ -18,11 +18,11 @@ public class VulnerableJava {
         }
     }
     
-    // Hard-coded credentials
+     
     private static final String PASSWORD = "admin123";
     private static final String API_KEY = "sk_live_abc123xyz789";
     
-    // Weak cryptography
+     
     public String weakHash(String input) {
         try {
             java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
